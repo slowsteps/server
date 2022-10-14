@@ -1,8 +1,10 @@
-import logging
 import socket
 from _thread import *
 
-# host = '127.0.0.1'
+
+
+# socket server
+
 host = '0.0.0.0'
 port = 1233
 clients = []
@@ -18,27 +20,22 @@ def client_handler(connection,inclients):
 
 def accept_connections(ServerSocket):
     Client, address = ServerSocket.accept()
-    logger.debug('Connected to: ' + address[0] + ':' + str(address[1]))
+    print('Connected to: ' + address[0] + ':' + str(address[1]))
     data = Client.recv(2048)
     clients.append(Client)
     start_new_thread(client_handler, (Client, clients))
 
 def start_server(host, port):
-    ServerSocket = socket.socket()
+    ServerSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         ServerSocket.bind((host, port))
     except socket.error as e:
-        logger.debug(str(e))
-    logger.debug(f'Server is listing on port {port}...')
+        print(str(e))
+    print(f'Server is listing on port {port}...')
     ServerSocket.listen()
 
     while True:
         accept_connections(ServerSocket)
 
-
-
-logging.basicConfig(filename="newfile.log",format='%(asctime)s %(message)s',filemode='w')
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-
+print("trying to start socket server right now..")
 start_server(host, port)
