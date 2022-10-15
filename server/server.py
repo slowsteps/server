@@ -13,10 +13,18 @@ clients = []
 def client_handler(connection,inclients):
     connection.send(str.encode('connected to server'))
     while True:
-        data = connection.recv(2048)
-        message = data.decode()
-        for c in inclients : c.sendall(data)
-    connection.close()
+        try:
+            data = connection.recv(2048)
+            message = data.decode()
+            for c in inclients : 
+                print(c)
+                c.sendall(data)
+        except socket.error as e:
+            # TODO unify client and connection wording
+            # remove client from broadcast list
+            print(e)
+            inclients.remove(connection)
+            break
 
 def accept_connections(ServerSocket):
     Client, address = ServerSocket.accept()

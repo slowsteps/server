@@ -1,9 +1,8 @@
-# echo-client.py
-
 import socket
 
-HOST = "127.0.0.1"  # The server's hostname or IP address
-PORT = 1233  # The port used by the server
+# HOST = "https://surftracker-365018.ew.r.appspot.com"  # The server's hostname or IP address
+HOST = "0.0.0.0"
+PORT = 1233  
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
