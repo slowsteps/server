@@ -1,5 +1,6 @@
 from flask import Flask,request,render_template
 import sqlite3
+import time
 
 app = Flask(__name__)
 
@@ -40,3 +41,17 @@ def reset():
 	conn.commit()
 	conn.close()
 	return('table reset')
+
+@app.route('/locations')
+def getalldata():
+	result = ""
+	conn = sqlite3.connect('database.db')
+	cursor = conn.execute("SELECT * from locations")
+	rows = cursor.fetchall()
+	for row in rows:
+		result = result + str(row[0]) + ";"
+	conn.close()
+	return result
+
+
+
