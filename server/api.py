@@ -11,24 +11,27 @@ def home():
 	return render_template('index.html')
 
 
-# use setlocation?location=somenew56794
-@app.route('/setlocation')
-def sendlocation():
-	newlocation = request.args.get('location')
-	print(newlocation)
+@app.route('/setlocation', methods=['POST'])
+def sendlocation2():
+	data = request.get_json()
+	print("in setlocation")
+	print(data)
 	conn = sqlite3.connect('database.db')
-	conn.execute("INSERT INTO locations VALUES (?)",(newlocation,))
+	conn.execute("INSERT INTO locations VALUES (?,?,?,?)",( data['longitude'], data['latitude'], data['speed'], data['course'] ))
 	conn.commit()
-	return 'setlocation'
+	return {"answer" : "location data received" , "data" : data}
+
+
 
 @app.route('/getlocation')
 def getlocation():
+	print("in getlocation")
 	result = "no location"
 	conn = sqlite3.connect('database.db')
 	cursor = conn.execute("SELECT * from locations")
 	rows = cursor.fetchall()
 	for row in rows:
-		result = row[0]
+		result = {"longitude" : row[0] , "latitude" : row[1], "speed" : row[2], "course" : row[3]}
 	conn.close()
 	return result
 
@@ -37,7 +40,7 @@ def getlocation():
 def reset():
 	conn = sqlite3.connect('database.db')
 	conn.execute('DROP TABLE locations')
-	conn.execute('CREATE TABLE locations (location TEXT)')
+	conn.execute('CREATE TABLE locations (longitude REAL, latitude REAL, speed REAL, course REAL)')
 	conn.commit()
 	conn.close()
 	return('table reset')
