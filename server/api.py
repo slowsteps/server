@@ -17,7 +17,7 @@ def sendlocation2():
 	print("in setlocation")
 	print(data)
 	conn = sqlite3.connect('database.db')
-	conn.execute("INSERT INTO locations VALUES (?,?,?,?)",( data['longitude'], data['latitude'], data['speed'], data['course'] ))
+	conn.execute("INSERT INTO locations VALUES (?,?,?,?,?)",( data['longitude'], data['latitude'], data['speed'], data['course'], data['timesend']))
 	conn.commit()
 	return {"answer" : "location data received" , "data" : data}
 
@@ -31,7 +31,7 @@ def getlocation():
 	cursor = conn.execute("SELECT * from locations")
 	rows = cursor.fetchall()
 	for row in rows:
-		result = {"longitude" : row[0] , "latitude" : row[1], "speed" : row[2], "course" : row[3]}
+		result = {"longitude" : row[0] , "latitude" : row[1], "speed" : row[2], "course" : row[3], "timesend" : row[4]}
 	conn.close()
 	return result
 
@@ -40,7 +40,7 @@ def getlocation():
 def reset():
 	conn = sqlite3.connect('database.db')
 	conn.execute('DROP TABLE locations')
-	conn.execute('CREATE TABLE locations (longitude REAL, latitude REAL, speed REAL, course REAL)')
+	conn.execute('CREATE TABLE locations (longitude REAL, latitude REAL, speed REAL, course REAL, timesend REAL)')
 	conn.commit()
 	conn.close()
 	return('table reset')

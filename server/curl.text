@@ -1,1 +1,1 @@
-curl -X POST http://127.0.0.1:8000/setlocation -H 'Content-Type: application/json' -d '{"longitude":12345.765,"latitude":55000.098,"speed":800.048,"course":40.098}'
+curl -X POST http://127.0.0.1:8000/setlocation -H 'Content-Type: application/json' -d '{"longitude":12345.765,"latitude":55000.098,"speed":800.048,"course":40.098,"timesend":11111111.0000}'
