@@ -45,15 +45,17 @@ def reset():
 	conn.close()
 	return('table reset')
 
-@app.route('/locations')
+@app.route('/mapdata')
 def getalldata():
-	result = ""
+	result = "<pre>longitude,latitude,speed,course,timesend \n"
 	conn = sqlite3.connect('database.db')
 	cursor = conn.execute("SELECT * from locations")
 	rows = cursor.fetchall()
+	
 	for row in rows:
-		result = result + str(row[0]) + ";"
+		result = result + str(row[0]) + "," + str(row[1]) + "," + str(row[2]) + "," + str(row[3]) + "," + str(row[4]) + "\n"
 	conn.close()
+	result = result + "</pre>"
 	return result
 
 
