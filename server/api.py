@@ -14,8 +14,6 @@ def home():
 @app.route('/setlocation', methods=['POST'])
 def sendlocation2():
 	data = request.get_json()
-	print("in setlocation")
-	print(data)
 	conn = sqlite3.connect('database.db')
 	conn.execute("INSERT INTO locations VALUES (?,?,?,?,?)",( data['longitude'], data['latitude'], data['speed'], data['course'], data['timesend']))
 	conn.commit()
@@ -25,7 +23,6 @@ def sendlocation2():
 
 @app.route('/getlocation')
 def getlocation():
-	print("in getlocation")
 	result = "no location"
 	conn = sqlite3.connect('database.db')
 	cursor = conn.execute("SELECT * from locations")
