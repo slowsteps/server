@@ -42,6 +42,7 @@ def reset():
 	conn.close()
 	return('table reset')
 
+
 @app.route('/mapdata')
 def getalldata():
 	result = "<pre>longitude,latitude,speed,course,timesend \n"

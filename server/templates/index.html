@@ -10,6 +10,10 @@ li {
 	line-height: 60px;
 }
 
+input {
+	margin-bottom: 20px;
+	display: block;
+}
 
 </style>
 
@@ -21,4 +25,49 @@ li {
 	<li><a href="/reset">reset</a>
 	<li><a href="/mapdata">mapdata</a>
 </ul>
+
+
+<h1>Add location</h1>
+
+
+<input value=52.312490665471906 id="latitude" placeholder="latitude">
+<input value=5.044555693340587 id="longitude" placeholder="longitude">
+ 
+
+
+<input type="button" id="form1" onclick="setLocation();" value="Submit" />
+
+<div id="output"></div>
+
+
+
+<script>
+
+
+function setLocation() {
+
+	
+		var payload = {
+		    longitude: document.querySelector('#longitude').value,
+		    latitude: document.querySelector('#latitude').value,
+		    speed: -1,
+		    course: -1,
+		    timesend: Date.now()/1000
+		};
+
+	const requestOptions = {
+    	method: 'POST',
+    	headers: { 'Content-Type': 'application/json' },
+    	body: JSON.stringify(payload)
+	};
+
+	fetch('/setlocation', requestOptions);
+
+
+	
+}
+</script>
+
+
+
 </body>
