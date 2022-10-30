@@ -13,6 +13,7 @@ li {
 input {
 	margin-bottom: 20px;
 	display: block;
+	width: 80%;
 }
 
 </style>
@@ -30,14 +31,9 @@ input {
 <h1>Add location</h1>
 
 
-<input value=52.312490665471906 id="latitude" placeholder="latitude">
-<input value=5.044555693340587 id="longitude" placeholder="longitude">
- 
-
-
+<input value="52.33434717724598,5.021970019095006" id="maps" placeholder="google maps coordinates">
 <input type="button" id="form1" onclick="setLocation();" value="Submit" />
 
-<div id="output"></div>
 
 
 
@@ -46,10 +42,12 @@ input {
 
 function setLocation() {
 
+		var mapscoord = document.querySelector('#maps').value.split(",")
+
 	
 		var payload = {
-		    longitude: document.querySelector('#longitude').value,
-		    latitude: document.querySelector('#latitude').value,
+		    longitude: Number(mapscoord[1]),
+		    latitude: Number(mapscoord[0]),
 		    speed: -1,
 		    course: -1,
 		    timesend: Date.now()/1000
